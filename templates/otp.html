@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="text-align: center;"><strong>CONFIRM YOUR ACCOUNT</strong></div>
+
+<center><p>check the inbox of your email - {{email}} - and enter the otp<p></center>
+
+<body>
+    <form action="{% url 'otp_verification' %}" method="POST">
+        {% csrf_token %}
+        <center>Enter the otp: <input type="text" placeholder="enter the otp" name="otp"></center><br><br>
+        <center><button type="submit">Verify</button></center>
+    </form>
+</body>
+
+
+{%if messages%}
+{%for message in messages%}
+<script>alert('{{message}}')</script>
+{%endfor%}
+{%endif%}
+</body>
+</html>
