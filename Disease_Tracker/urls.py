@@ -26,7 +26,7 @@ from user.views import LoginView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('user.urls'), name='home'),
-    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='docs'),
+    path('', include('user.urls'), name='home'),
+    path('schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='docs'),
 ]
