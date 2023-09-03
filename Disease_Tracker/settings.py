@@ -22,9 +22,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-a4eruk_b-*dv33azjj42z%jk^sz8iln20d0#x1)3_r!e%&3p&*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://zarpach.netlify.app/']
 
 # Application definition
 
