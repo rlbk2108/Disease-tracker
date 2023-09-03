@@ -2,6 +2,7 @@ from django.contrib.auth.forms import UserCreationForm, UsernameField, Authentic
 from django import forms
 
 from .models import CustomUser
+from user.tasks import send_feedback_email_task
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -15,5 +16,9 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class LoginForm(AuthenticationForm):
-    pass
-    # email = forms.CharField(label='Email')
+
+    def send_email(self):
+        print(self.request)
+        send_feedback_email_task.delay(
+            self.request.POST['username'], self.request.POST['otp']
+        )

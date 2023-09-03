@@ -18,14 +18,15 @@ from django.contrib import admin
 from django.template.defaulttags import url
 
 from django.urls import path, include
-from django_otp.forms import OTPAuthenticationForm
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+
 from user import views
 from user.views import LoginView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('user.urls'), name='home'),
-    path('accounts/login/', LoginView.as_view(), name='login'),
-    path('accounts/get_otp/', views.sendOTP, name='sentOTP'),
-    path('accounts/otp_verification/', views.otp_verification, name="otp_verification")
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='docs'),
 ]

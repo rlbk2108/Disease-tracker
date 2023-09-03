@@ -14,22 +14,19 @@ from rest_framework.response import Response
 from user.forms import CustomUserCreationForm, LoginForm
 from user.models import CustomUser
 from user.serializers import UserSerializer, RegisterSerializer
-
-
-def send_otp(request):
-    s = ""
-    for x in range(0, 6):
-        s += str(random.randint(0, 9))
-    request.session["otp"] = s
-    send_mail("Verify your email", "Your verification code is " + s + "\nDon't share this code!", 'sanazera2@gmail.com',
-              [request.POST['username']], fail_silently=False)
-    return render(request, "otp.html")
+from user.tasks import send_feedback_email_task
 
 
 def sendOTP(request):
     if request.method == "POST":
+        s = ''
         email = request.POST['username']
-        send_otp(request)
+        for x in range(0, 6):
+            s += str(random.randint(0, 9))
+        request.session["otp"] = s
+        send_feedback_email_task.apply_async(args=[
+            email, s
+        ])
         return render(request, 'otp.html', {"email": email})
 
 
@@ -48,8 +45,12 @@ def otp_verification(request):
 class LoginView(auth_views.LoginView):
     form_class = LoginForm
     template_name = 'login.html'
-    # success_url = reverse_lazy('otp_verification')
+    success_url = '/otp_verification/'
 
+    def form_valid(self, form):
+        print('form valid')
+        form.send_email()
+        return super().form_valid(form)
 
 
 class UsersListView(viewsets.ModelViewSet):
