@@ -23,7 +23,9 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get("DEBUG", default=0))
-ALLOWED_HOSTS = ['https://zarpach.netlify.app/']
+ALLOWED_HOSTS = ['https://disease-tracker-production.up.railway.app/', '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://disease-tracker-production.up.railway.app/']
+SECURE_SSL_REDIRECT = True
 
 # Application definition
 
