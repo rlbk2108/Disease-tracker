@@ -23,7 +23,6 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get("DEBUG", default=0))
-DATABASE_URL = 'postgresql://postgres:guYj3V8VB9AJAmtxv88i@containers-us-west-40.railway.app:6872/railway'
 ALLOWED_HOSTS = ['https://zarpach.netlify.app/']
 
 # Application definition
@@ -161,6 +160,6 @@ CELERY_RESULT_BACKEND = "redis://localhost:6379"
 
 
 import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=500)
+db_from_env = dj_database_url.config(conn_max_age=500, default='postgresql://postgres:guYj3V8VB9AJAmtxv88i@containers-us-west-40.railway.app:6872/railway')
 DATABASES['default'].update(db_from_env)
 
